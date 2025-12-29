@@ -44,7 +44,7 @@ pip install -e ".[dev]"
 
 ```bash
 # Install PyTorch with CUDA support
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 ```
 
 **Requirements:** Python 3.8+, pip 19.0+
