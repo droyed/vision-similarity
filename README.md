@@ -28,10 +28,10 @@ Vision Similarity provides a simple API for extracting deep learning features fr
 
 ```bash
 # Install from GitHub repository
-pip install git+https://github.com/yourusername/vision-similarity.git
+pip install git+https://github.com/droyed/vision-similarity.git
 
 # Install from GitHub with development tools
-pip install "git+https://github.com/yourusername/vision-similarity.git#egg=vision-similarity[dev]"
+pip install "git+https://github.com/droyed/vision-similarity.git#egg=vision-similarity[dev]"
 
 # Local installation (if you've cloned the repo)
 pip install -e .
