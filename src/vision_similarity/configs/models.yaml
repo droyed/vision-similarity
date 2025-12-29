@@ -1,0 +1,111 @@
+# Model Configuration for Feature Extraction
+# This file contains all available vision models with their specifications
+
+dinov3:
+  - id: facebook/dinov3-vits16-pretrain-lvd1689m
+    params: 22M
+    hidden_dim: 384
+    description: Small - fastest
+    size_info: Small
+
+  - id: facebook/dinov3-vitb16-pretrain-lvd1689m
+    params: 86M
+    hidden_dim: 768
+    description: Base
+    size_info: Base
+
+  - id: facebook/dinov3-vitl16-pretrain-lvd1689m
+    params: 300M
+    hidden_dim: 1024
+    description: Large
+    size_info: Large
+
+  - id: facebook/dinov3-vitg16-pretrain-lvd1689m
+    params: 1.1B
+    hidden_dim: 1280
+    description: Giant
+    size_info: Giant
+
+  - id: facebook/dinov3-vit7b16-pretrain-lvd1689m
+    params: 7B
+    hidden_dim: 4096
+    description: Largest - best quality
+    size_info: Largest
+
+dinov2:
+  - id: facebook/dinov2-small
+    params: 22.1M
+    hidden_dim: 384
+    description: Small DINOv2
+    size_info: Small
+
+  - id: facebook/dinov2-base
+    params: 86.6M
+    hidden_dim: 768
+    description: Base DINOv2
+    size_info: Base
+
+  - id: facebook/dinov2-large
+    params: 304.4M
+    hidden_dim: 1024
+    description: Large DINOv2
+    size_info: Large
+
+  - id: facebook/dinov2-giant
+    params: 1136.5M
+    hidden_dim: 1536
+    description: Giant DINOv2
+    size_info: Giant
+
+other:
+  - id: google/vit-base-patch16-224
+    params: 86.4M
+    hidden_dim: 768
+    layers: 12
+    model_type: ViT
+    description: Google ViT Base
+    size_info: Base
+
+  - id: google/vit-large-patch16-224
+    params: 304.4M
+    hidden_dim: 1024
+    layers: 24
+    model_type: ViT
+    description: Google ViT Large
+    size_info: Large
+
+  - id: microsoft/beit-base-patch16-224
+    params: 85.8M
+    hidden_dim: 768
+    layers: 12
+    model_type: BEiT
+    description: Microsoft BEiT Base
+    size_info: Base
+
+  - id: microsoft/beit-large-patch16-224
+    params: 303.4M
+    hidden_dim: 1024
+    layers: 24
+    model_type: BEiT
+    description: Microsoft BEiT Large
+    size_info: Large
+
+  - id: openai/clip-vit-base-patch32
+    params: 151.3M
+    vision_hidden: 768
+    vision_layers: 12
+    text_hidden: 512
+    text_layers: 12
+    model_type: CLIP
+    description: OpenAI CLIP ViT Base
+    size_info: Base
+
+  - id: openai/clip-vit-large-patch14
+    params: 427.6M
+    vision_hidden: 1024
+    vision_layers: 24
+    text_hidden: 768
+    text_layers: 12
+    model_type: CLIP
+    description: OpenAI CLIP ViT Large
+    size_info: Large

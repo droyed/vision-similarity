@@ -1,0 +1,62 @@
+@startuml vision_similarity_c4_flow
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+' Custom styling
+!define UTILITY_COLOR #FFF4E6
+!define UTILITY_BORDER #FF9800
+!define CLASS_COLOR #E3F2FD
+!define CLASS_BORDER #1976D2
+!define COMPUTE_COLOR #F3E5F5
+!define COMPUTE_BORDER #7B1FA2
+!define EXTERNAL_COLOR #ECEFF1
+!define EXTERNAL_BORDER #607D8B
+
+AddElementTag("utility", $bgColor=UTILITY_COLOR, $borderColor=UTILITY_BORDER, $fontColor="#000000", $shape=EightSidedShape())
+AddElementTag("class", $bgColor=CLASS_COLOR, $borderColor=CLASS_BORDER, $fontColor="#000000", $shape=RoundedBoxShape())
+AddElementTag("compute", $bgColor=COMPUTE_COLOR, $borderColor=COMPUTE_BORDER, $fontColor="#000000", $shape=RoundedBoxShape())
+AddElementTag("external", $bgColor=EXTERNAL_COLOR, $borderColor=EXTERNAL_BORDER, $fontColor="#000000", $shape=DatabaseShape())
+
+AddRelTag("core", $textColor="#1976D2", $lineColor="#1976D2", $lineStyle=BoldLine())
+AddRelTag("external", $textColor="#607D8B", $lineColor="#607D8B", $lineStyle=DashedLine())
+AddRelTag("compute", $textColor="#7B1FA2", $lineColor="#7B1FA2", $lineStyle=BoldLine())
+AddRelTag("user_api", $textColor="#2E7D32", $lineColor="#2E7D32", $lineStyle=BoldLine())
+
+LAYOUT_WITH_LEGEND()
+
+title C4 Component Diagram - Vision Similarity Module (High-Level)
+
+Person(user, "User/Developer", "Uses the vision similarity API")
+
+System_Boundary(vision_system, "Vision Similarity System") {
+
+    Component(feature_extraction, "Feature Extraction Layer", "Functions", "Loads models and extracts image embeddings\n• load_vision_model()\n• extract_image_features()\n• make_deterministic()", $tags="utility")
+
+    Component(img_store, "ImageFeatureStore", "Class", "Manages feature storage and persistence\n• from_images() / from_npz()\n• save_npz()\n• Feature + path management", $tags="class")
+
+    Component(feat_sim, "FeatureSimilarity", "Class", "Computes and visualizes similarity\n• from_image_sets()\n• compute() / matrix\n• plot()", $tags="class")
+
+    Component(similarity_calc, "Similarity Computation", "Function", "Calculates pairwise similarity\n• cosine_similarity_matrix()", $tags="compute")
+}
+
+System_Ext(hf_models, "HuggingFace Hub", "Pretrained vision models", $tags="external")
+System_Ext(filesystem, "File System", "Images and NPZ files", $tags="external")
+System_Ext(plot_module, "Plotting Module", "Visualization", $tags="external")
+
+' User interaction patterns (high-level)
+Rel(user, img_store, "Create/Load", "Feature stores", $tags="user_api")
+Rel(user, feat_sim, "Compute & Visualize", "Similarity between stores", $tags="user_api")
+
+' Internal component flow
+Rel(img_store, feature_extraction, "Uses", "for extraction", $tags="core")
+Rel(feature_extraction, hf_models, "Loads", "pretrained models", $tags="external")
+Rel(feature_extraction, filesystem, "Reads", "image files", $tags="external")
+
+Rel(img_store, filesystem, "Persists/Loads", "NPZ format", $tags="external")
+
+Rel(feat_sim, img_store, "Uses", "two stores", $tags="core")
+Rel(feat_sim, similarity_calc, "Calls", "compute matrix", $tags="compute")
+Rel(feat_sim, plot_module, "Visualizes", "similarity results", $tags="external")
+
+SHOW_LEGEND()
+
+@enduml

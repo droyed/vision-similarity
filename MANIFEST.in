@@ -1,0 +1,26 @@
+# Include documentation files
+include README.md
+include LICENSE
+include requirements.txt
+include pyproject.toml
+
+# Include configuration files
+recursive-include src/vision_similarity/configs *.yaml *.yml *.json
+
+# Include test data if any
+recursive-include tests *.py
+recursive-include tests/data *
+
+# Include documentation
+recursive-include docs *.md *.rst *.txt
+
+# Exclude development and cache files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
+global-exclude *.so
+global-exclude .git*
+global-exclude .claude
+global-exclude .cursor
+global-exclude .vscode
+exclude setup.py.backup

@@ -1,0 +1,43 @@
+@startuml plot_similarity_matrix_flow
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+' Define custom styles for call hierarchy
+AddElementTag("entrypoint", $bgColor="#1976D2", $fontColor="#FFFFFF", $borderColor="#0D47A1", $shape=RoundedBoxShape())
+AddElementTag("orchestrator", $bgColor="#388E3C", $fontColor="#FFFFFF", $borderColor="#1B5E20", $shape=RoundedBoxShape())
+AddElementTag("helper", $bgColor="#F57C00", $fontColor="#FFFFFF", $borderColor="#E65100", $shape=EightSidedShape())
+AddElementTag("output", $bgColor="#C62828", $fontColor="#FFFFFF", $borderColor="#B71C1C", $shape=RoundedBoxShape())
+AddElementTag("data", $bgColor="#7B1FA2", $fontColor="#FFFFFF", $borderColor="#4A148C")
+
+AddRelTag("primary", $lineColor="#1976D2", $lineThickness="3")
+AddRelTag("secondary", $lineColor="#388E3C", $lineThickness="2", $lineStyle=DashedLine())
+AddRelTag("return", $lineColor="#666666", $lineThickness="2", $lineStyle=DottedLine())
+
+title C4 Component Diagram - plot_similarity_matrix.py Flow
+
+Container_Boundary(plot_module, "plot_similarity_matrix.py") {
+    Component(plot_matrix, "plot_matrix()", "Main API Function", "Entry point: accepts image lists, similarity matrix, and styling parameters", $tags="entrypoint")
+
+    Component(build_canvas, "build_similarity_thumbnail_canvas()", "Canvas Builder", "Constructs composite RGB canvas with thumbnails and colored similarity cells", $tags="orchestrator")
+
+    Component(make_thumb, "make_thumbnail_cell()", "Image Processor", "Resizes image preserving aspect ratio, centers in cell with padding", $tags="helper")
+
+    Component(plot_canvas, "plot_canvas_with_colorbar()", "Visualizer", "Displays canvas with matplotlib, adds colorbar, saves or shows output", $tags="output")
+
+    ComponentDb(canvas_data, "Canvas Array", "numpy array", "RGB canvas (H, W, 3) uint8", $tags="data")
+}
+
+Rel(plot_matrix, build_canvas, "1. Passes row_images, col_images, sim, styling params", "Function call", $tags="primary")
+
+Rel(build_canvas, make_thumb, "2. Processes each image", "Loop: for each row & col image", $tags="secondary")
+Rel(make_thumb, build_canvas, "3. Returns thumbnail cell", "PIL Image", $tags="return")
+
+Rel(build_canvas, canvas_data, "4. Constructs & fills", "Creates numpy array", $tags="secondary")
+Rel_Back(build_canvas, canvas_data, "Adds thumbnails, colors, text, gridlines", $tags="secondary")
+
+Rel(build_canvas, plot_matrix, "5. Returns canvas", "numpy array (H,W,3)", $tags="return")
+
+Rel(plot_matrix, plot_canvas, "6. Passes canvas, cmap, vmin/vmax, savepath", "Function call", $tags="primary")
+
+SHOW_LEGEND()
+
+@enduml

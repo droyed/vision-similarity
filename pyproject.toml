@@ -1,0 +1,138 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vision-similarity"
+version = "0.1.0"
+description = "Image similarity analysis using pre-trained vision models"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Divakar Roy"},
+]
+maintainers = [
+    {name = "Divakar Roy"},
+]
+keywords = [
+    "image-similarity",
+    "computer-vision",
+    "deep-learning",
+    "transformers",
+    "feature-extraction",
+    "dino",
+    "dinov2",
+    "vision-transformers",
+    "similarity-search",
+    "image-analysis",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.8"
+# Note: For CUDA support, install PyTorch first:
+# pip install torch==2.9.1+cu130 torchvision==0.24.1+cu130 --index-url https://download.pytorch.org/whl/cu130
+# Or use: pip install -r requirements.txt (recommended)
+dependencies = [
+    "Pillow>=10.0.0",
+    "numpy>=1.24.0",
+    "matplotlib>=3.7.0",
+    "PyQt6>=6.0.0",
+    "torch>=2.9.1",
+    "torchvision>=0.24.1",
+    "transformers",
+    "huggingface-hub>=0.19.0",
+    "accelerate>=1.12.0",
+    "PyYAML>=6.0",
+    "pandas>=2.0.0",
+    "tabulate>=0.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+]
+docs = [
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+]
+
+# [project.urls]
+# Uncomment and fill in your project URLs
+# Homepage = "https://github.com/your-org/vision-similarity"
+# Documentation = "https://vision-similarity.readthedocs.io"
+# Repository = "https://github.com/your-org/vision-similarity"
+# Issues = "https://github.com/your-org/vision-similarity/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+vision_similarity = ["configs/*.yaml", "configs/*.yml"]
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | build
+  | dist
+  | __pycache__
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--cov=vision_similarity",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true

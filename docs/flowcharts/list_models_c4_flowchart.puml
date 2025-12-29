@@ -1,0 +1,48 @@
+@startuml list_models_overview
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram - Model Listing Functionality
+
+Person(user, "User/Application", "Needs to query available models")
+
+Container_Boundary(list_models, "list_models.py") {
+    Component(load_config, "_load_models_config()", "Helper", "Loads YAML configuration with model definitions")
+
+    Component(get_models, "get_available_models()", "Main Function", "Returns models grouped by category with optional verification")
+
+    Component(get_models_list, "get_all_available_models_list()", "Utility Function", "Returns flat list of all available models")
+
+    Component(get_models_info, "get_available_models_with_info()", "Main Function", "Returns models with metadata (params, size, description, hidden_dim)")
+
+    Component(print_table, "print_models_table()", "Display Function", "Formats and displays models in table using pandas & tabulate")
+
+    Component(check_model, "check_model()", "Helper", "Verifies model availability via AutoImageProcessor")
+}
+
+ContainerDb(yaml_config, "config/models.yaml", "YAML File", "Stores model definitions by category")
+
+System_Ext(hf_hub, "Hugging Face Hub", "Model repository and AutoImageProcessor API")
+
+' Relationships - User to Functions
+Rel(user, get_models, "Calls to get models by category", "Dict[str, List[str]]")
+Rel(user, get_models_list, "Calls to get flat model list", "List[str]")
+Rel(user, get_models_info, "Calls to get models with metadata", "Dict[str, List[Dict]]")
+Rel(user, print_table, "Calls to display models", "prints table")
+
+' Internal Function Relationships
+Rel(get_models, load_config, "Uses", "Loads config")
+Rel(get_models_list, get_models, "Delegates to", "Reuses logic")
+Rel(get_models_info, load_config, "Uses", "Loads config")
+
+Rel(get_models, check_model, "Uses (if verify=True)", "Validates each model")
+Rel(get_models_info, check_model, "Uses (if verify=True)", "Validates each model")
+
+Rel(print_table, get_models_info, "Receives data from", "Typically called after")
+
+' External Dependencies
+Rel(load_config, yaml_config, "Reads from", "YAML")
+Rel(check_model, hf_hub, "Queries", "AutoImageProcessor.from_pretrained()")
+
+SHOW_LEGEND()
+
+@enduml

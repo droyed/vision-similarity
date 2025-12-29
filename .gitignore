@@ -1,0 +1,122 @@
+# Scaffold Package - AI IDE environment setup files
+.cursorrules
+.clinerules
+.vscode/
+.vscode/settings.json
+.cursor/
+.cursor/activate_venv.mdc
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# PyCharm
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# PyTest
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Machine Learning & Data Science
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.ckpt
+*.pth
+*.pt
+*.safetensors
+models/
+checkpoints/
+weights/
+logs/
+runs/
+tensorboard/
+wandb/
+
+# Output files
+outputs/
+results/
+plots/
+figures/
+*.png
+*.jpg
+*.jpeg
+!assets/*.png
+!assets/*.jpg
+!assets/*.jpeg
+
+# Data files
+data/
+datasets/
+*.csv
+*.tsv
+*.parquet
+*.feather
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/

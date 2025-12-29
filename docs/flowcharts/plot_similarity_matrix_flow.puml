@@ -1,0 +1,69 @@
+@startuml plot_similarity_matrix_flow
+
+title Flow Diagram - plot_similarity_matrix.py
+
+skinparam rectangle {
+    BackgroundColor<<entry>> LightBlue
+    BackgroundColor<<canvas>> LightGreen
+    BackgroundColor<<helper>> Yellow
+    BackgroundColor<<plot>> LightCoral
+}
+
+rectangle "plot_matrix()\n(Main API Function)" as plot_matrix <<entry>>
+rectangle "build_similarity_thumbnail_canvas()\n(Canvas Construction)" as build_canvas <<canvas>>
+rectangle "make_thumbnail_cell()\n(Image Processing)" as make_thumb <<helper>>
+rectangle "plot_canvas_with_colorbar()\n(Visualization)" as plot_canvas <<plot>>
+
+note right of plot_matrix
+  Entry point for creating
+  similarity heatmap
+
+  Inputs:
+  - images1, images2 (PIL Images)
+  - sim (similarity matrix)
+  - styling parameters
+  - savepath, title, block
+end note
+
+note right of build_canvas
+  Creates composite RGB canvas
+  with thumbnails and colored
+  similarity cells
+
+  Returns: numpy array (H, W, 3)
+end note
+
+note right of make_thumb
+  Resizes image preserving
+  aspect ratio and centers
+  in cell with padding
+
+  Returns: PIL Image
+end note
+
+note right of plot_canvas
+  Displays canvas with
+  matplotlib and adds colorbar
+
+  - Saves to file if savepath provided
+  - Shows plot if no savepath
+end note
+
+plot_matrix --> build_canvas : 1. Build canvas
+build_canvas --> make_thumb : 2. Create thumbnail\nfor each image\n(row & col images)
+make_thumb --> build_canvas : 3. Return\nthumbnail cells
+build_canvas --> plot_matrix : 4. Return\ncanvas array
+plot_matrix --> plot_canvas : 5. Plot & display\nwith colorbar
+
+note bottom of build_canvas
+  Internal processing:
+  1. Creates empty canvas
+  2. Processes row_images to thumbnails
+  3. Processes col_images to thumbnails
+  4. Places thumbnails in grid
+  5. Fills similarity cells with colors
+  6. Adds text annotations
+  7. Draws gridlines
+end note
+
+@enduml
